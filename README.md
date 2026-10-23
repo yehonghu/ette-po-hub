@@ -6,6 +6,10 @@ A complete, working implementation of the **ette hotel kitchen purchase-order sy
 
 ![CI](https://github.com/yehonghu/ette-po-hub/actions/workflows/ci.yml/badge.svg)
 
+## Live demo (GitHub Pages)
+
+**https://yehonghu.github.io/ette-po-hub/** — a fully interactive static demo of the real UI. It runs the same business rules in your browser (an in-browser mock API seeded with the same demo data: 8 role accounts, password `demo1234`, POs `ETT-PO-0001…0005`); everything you do is stored only in your browser's localStorage, and a **Reset demo data** control (login page / sidebar) restores the original seed. The production full-stack version (Express + SQLite) is what runs locally / on a server — see below.
+
 ## The 11-step cycle, as software
 
 | SOP step | In the app |

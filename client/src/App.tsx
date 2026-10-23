@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { get, getToken, type User } from './lib/api';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { DEMO_MODE, get, getToken, type User } from './lib/api';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -45,8 +45,9 @@ export default function App() {
   }
   if (!user) return <Login onLogin={setUser} />;
 
+  const Router = DEMO_MODE ? HashRouter : BrowserRouter;
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route element={<Layout user={user} onLogout={() => setUser(null)} />}>
           <Route index element={<Dashboard user={user} />} />
@@ -69,6 +70,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }

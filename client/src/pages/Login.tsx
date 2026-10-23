@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { post, setToken, type User } from '../lib/api';
+import { DEMO_MODE, post, resetDemoData, setToken, type User } from '../lib/api';
 import { Btn, ErrorBanner, inputCls, labelCls } from '../components/ui';
 
 const DEMO = [
@@ -65,6 +65,14 @@ export default function Login({ onLogin }: { onLogin: (u: User) => void }) {
           </div>
         </div>
         <p className="mt-5 text-center text-[12px] text-slate-400">Implements the ette hotel Kitchen Purchasing PO SOP (11-step cycle, CAD approval matrix, three-way match).</p>
+        {DEMO_MODE && (
+          <div className="mt-4 rounded-2xl border border-indigo-100 bg-indigo-50/70 px-4 py-3 text-center text-[12px] leading-relaxed text-indigo-900/70 dark:border-indigo-900/50 dark:bg-indigo-950/40 dark:text-indigo-200/80">
+            <span className="font-semibold">Demo mode</span> — this static demo runs entirely in your browser; data is stored locally (localStorage), not on a server.{' '}
+            <button type="button" onClick={() => { resetDemoData(); setToken(null); window.location.reload(); }} className="font-semibold text-indigo-600 underline decoration-indigo-300 underline-offset-2 hover:text-indigo-800 dark:text-indigo-300">
+              Reset demo data
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

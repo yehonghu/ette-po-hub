@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { get, setToken, type User } from '../lib/api';
+import { DEMO_MODE, get, resetDemoData, setToken, type User } from '../lib/api';
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: '◧' },
@@ -128,6 +128,14 @@ export default function Layout({ user, onLogout }: { user: User; onLogout: () =>
             <button onClick={() => { setToken(null); onLogout(); }} className="btn mt-3 w-full rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm hover:text-slate-800 dark:bg-slate-800 dark:text-slate-300 dark:hover:text-white">
               Sign out
             </button>
+            {DEMO_MODE && (
+              <div className="mt-3 border-t border-slate-200/70 pt-2.5 text-center dark:border-slate-700/60">
+                <span className="text-[10.5px] font-medium uppercase tracking-wider text-slate-400">Demo mode · data lives in your browser</span>
+                <button onClick={() => { resetDemoData(); setToken(null); onLogout(); }} className="btn mt-1 w-full rounded-lg px-3 py-1 text-[11px] font-semibold text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+                  Reset demo data
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </aside>

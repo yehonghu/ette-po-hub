@@ -1,10 +1,21 @@
+import { demoApi, resetDemoData } from './demoApi';
+
 export type User = { id: number; name: string; email: string; role: string; roleLabel: string };
+
+/** True only in the static GitHub Pages build (VITE_DEMO=1): the API is an in-browser mock. */
+export const DEMO_MODE = import.meta.env.VITE_DEMO === '1';
+export { resetDemoData };
 
 const TOKEN_KEY = 'ette-token';
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const setToken = (t: string | null) => (t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY));
 
 export async function api<T = any>(method: string, path: string, body?: unknown): Promise<T> {
+  if (DEMO_MODE) {
+    const { status, data } = await demoApi(method, path, body);
+    if (status >= 400) throw new Error((data as any)?.error || `Request failed (${status})`);
+    return data as T;
+  }
   const r = await fetch(path, {
     method,
     headers: { 'Content-Type': 'application/json', ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}) },
