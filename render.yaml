@@ -1,0 +1,23 @@
+# Render Blueprint — ETTE PO Hub
+# One-click deploy: push this repo to Render and it builds automatically.
+# Notes:
+# - The app serves the React build from the same Express process, so one
+#   "web" service is all it needs. PORT is provided by Render and is already
+#   respected (falls back to 4000 locally).
+# - SQLite lives on Render's ephemeral disk: demo data resets on redeploy /
+#   restart. Acceptable for a review demo; the seed data (ETTC demo POs)
+#   re-seeds automatically on boot.
+# - Render free tier sleeps after inactivity: first visit takes ~50s to wake.
+services:
+  - type: web
+    name: ette-po-hub
+    runtime: node
+    plan: free
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: JWT_SECRET
+        generateValue: true
