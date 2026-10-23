@@ -57,7 +57,7 @@ export default function ProcessMap() {
   const { data, error, loading } = useLoader(() => get('/api/process-map'));
   return (
     <div>
-      <PageTitle title="Process Map" sub="His 11-step kitchen purchasing cycle — from need to payment. Controlled · approved · tracked. Counts update live from the system." />
+      <PageTitle title="Process Map" sub="The 11-step kitchen purchasing cycle — from need to payment. Controlled · approved · tracked. Counts update live from the system." />
       <ErrorBanner message={error} />
       {loading || !data ? <Skeleton rows={6} /> : (
         <>
