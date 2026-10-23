@@ -67,7 +67,7 @@ export default function Settings({ user }: { user: User }) {
                     <div className="truncate text-sm font-semibold">{u.name}</div>
                     <div className="truncate text-[12px] text-slate-400">{u.email}</div>
                   </div>
-                  <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">{ROLE_LABELS[u.role] || u.role}</span>
+                  <span className="whitespace-nowrap rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">{ROLE_LABELS[u.role] || u.role}</span>
                 </div>
               ))}
             </div>

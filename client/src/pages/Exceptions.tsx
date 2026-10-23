@@ -49,7 +49,7 @@ export default function Exceptions() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-semibold text-slate-900 dark:text-white">{e.ref}</span>
-                    <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{e.type.replaceAll('_', ' ')}</span>
+                    <span className="whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{e.type.replaceAll('_', ' ')}</span>
                     <Pill status={e.status} />
                     {e.po_number && <Link to={`/pos/${e.po_id}`} className="text-[13px] font-semibold text-indigo-600 dark:text-indigo-400">{e.po_number}</Link>}
                     <span className="text-[13px] text-slate-400">{e.vendor_name || ''}</span>

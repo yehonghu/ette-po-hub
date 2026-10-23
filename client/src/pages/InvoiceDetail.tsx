@@ -38,18 +38,20 @@ export default function InvoiceDetail() {
         <div className="space-y-4 xl:col-span-2">
           <Card className="p-6">
             <h2 className="mb-4 font-display text-[16px] font-semibold text-slate-900 dark:text-white">Invoice lines</h2>
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[460px] text-sm">
               <thead><tr className="border-b border-slate-100 text-left text-[11px] uppercase tracking-wider text-slate-400 dark:border-slate-800">
-                <th className="py-2 font-semibold">Item</th><th className="py-2 text-right font-semibold">Qty</th><th className="py-2 text-right font-semibold">Unit price</th><th className="py-2 text-right font-semibold">Line total</th></tr></thead>
+                <th className="whitespace-nowrap px-3 py-2 font-semibold">Item</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Qty</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Unit price</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Line total</th></tr></thead>
               <tbody>
                 {inv.lines.map((l: any) => (
                   <tr key={l.id} className="border-b border-slate-50 last:border-0 dark:border-slate-800/60">
-                    <td className="py-2.5 font-medium">{l.item_name}</td><td className="py-2.5 text-right">{l.qty}</td>
-                    <td className="py-2.5 text-right">{money(l.unit_price)}</td><td className="py-2.5 text-right font-semibold">{money(l.line_total)}</td>
+                    <td className="px-3 py-2.5 font-medium">{l.item_name}</td><td className="px-3 py-2.5 text-right">{l.qty}</td>
+                    <td className="px-3 py-2.5 text-right">{money(l.unit_price)}</td><td className="px-3 py-2.5 text-right font-semibold">{money(l.line_total)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
             <dl className="ml-auto mt-4 w-60 space-y-1.5 text-sm">
               <div className="flex justify-between"><dt className="text-slate-400">Subtotal</dt><dd>{money(inv.subtotal)}</dd></div>
               <div className="flex justify-between"><dt className="text-slate-400">Tax</dt><dd>{money(inv.tax)}</dd></div>
@@ -62,29 +64,31 @@ export default function InvoiceDetail() {
           <Card className="p-6">
             <div className="mb-1 flex items-center justify-between">
               <h2 className="font-display text-[16px] font-semibold text-slate-900 dark:text-white">Three-way match (Step 8)</h2>
-              {inv.match_status && <span className={`rounded-full px-3 py-1 text-[12px] font-bold ${inv.match_status === 'pass' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'}`}>
+              {inv.match_status && <span className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold ${inv.match_status === 'pass' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'}`}>
                 {inv.match_status === 'pass' ? '✓ MATCH PASSED' : '✗ MATCH FAILED'}</span>}
             </div>
             <p className="mb-4 text-[13px] text-slate-400">What was authorized (PO) vs what actually arrived (receiving record) vs what the supplier is asking to be paid (invoice).</p>
             {!match ? <p className="text-sm text-slate-400">Not matched yet — run the match to unlock invoice approval.</p> : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[660px] text-sm">
                 <thead><tr className="border-b border-slate-100 text-left text-[11px] uppercase tracking-wider text-slate-400 dark:border-slate-800">
-                  <th className="py-2 font-semibold">Item</th><th className="py-2 text-right font-semibold">Ordered</th><th className="py-2 text-right font-semibold">Received</th>
-                  <th className="py-2 text-right font-semibold">Invoiced</th><th className="py-2 text-right font-semibold">PO price</th><th className="py-2 text-right font-semibold">Inv price</th><th className="py-2 font-semibold">Result</th></tr></thead>
+                  <th className="whitespace-nowrap px-3 py-2 font-semibold">Item</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Ordered</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Received</th>
+                  <th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Invoiced</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">PO price</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Inv price</th><th className="whitespace-nowrap px-3 py-2 font-semibold">Result</th></tr></thead>
                 <tbody>
                   {match.checks.map((c: any, i: number) => (
                     <tr key={i} className={`border-b border-slate-50 last:border-0 dark:border-slate-800/60 ${c.status === 'variance' ? 'bg-red-50/50 dark:bg-red-950/20' : ''}`}>
-                      <td className="py-2.5 font-medium">{c.item}</td>
-                      <td className="py-2.5 text-right">{c.ordered ?? '—'}</td><td className="py-2.5 text-right">{c.received ?? '—'}</td>
-                      <td className="py-2.5 text-right">{c.invoicedQty ?? '—'}</td>
-                      <td className="py-2.5 text-right">{c.poPrice != null ? money(c.poPrice) : '—'}</td>
-                      <td className="py-2.5 text-right">{c.invoicePrice != null ? money(c.invoicePrice) : '—'}</td>
-                      <td className="py-2.5">{c.status === 'ok' ? <span className="font-semibold text-emerald-600 dark:text-emerald-400">✓ OK</span>
+                      <td className="px-3 py-2.5 font-medium">{c.item}</td>
+                      <td className="px-3 py-2.5 text-right">{c.ordered ?? '—'}</td><td className="px-3 py-2.5 text-right">{c.received ?? '—'}</td>
+                      <td className="px-3 py-2.5 text-right">{c.invoicedQty ?? '—'}</td>
+                      <td className="px-3 py-2.5 text-right">{c.poPrice != null ? money(c.poPrice) : '—'}</td>
+                      <td className="px-3 py-2.5 text-right">{c.invoicePrice != null ? money(c.invoicePrice) : '—'}</td>
+                      <td className="px-3 py-2.5">{c.status === 'ok' ? <span className="font-semibold text-emerald-600 dark:text-emerald-400">✓ OK</span>
                         : <span className="text-[12.5px] font-medium text-red-600 dark:text-red-300">{c.problems.join('; ')}</span>}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
             {match && <p className="mt-3 text-[13px] text-slate-500 dark:text-slate-400">Expected total (received × PO price + freight/tax): <span className="font-semibold">{money(match.expectedTotal)}</span> · Invoice total: <span className="font-semibold">{money(match.invoiceTotal)}</span></p>}
           </Card>

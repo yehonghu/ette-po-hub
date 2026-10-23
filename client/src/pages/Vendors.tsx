@@ -43,7 +43,7 @@ export default function Vendors({ user }: { user: User }) {
               <Card hover className={`p-5 ${selected === v.id ? 'ring-2 ring-indigo-400' : ''}`}>
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-display text-[16px] font-semibold text-slate-900 dark:text-white">{v.name}</span>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-300">{v.terms}</span>
+                  <span className="shrink-0 whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-300">{v.terms}</span>
                 </div>
                 <div className="mt-1.5 space-y-0.5 text-[13px] text-slate-500 dark:text-slate-400">
                   <div>{v.contact_name} · {v.phone}</div>
@@ -73,7 +73,7 @@ export default function Vendors({ user }: { user: User }) {
                     const low = Number(i.on_hand) < Number(i.par_level);
                     return (
                       <tr key={i.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/80 dark:border-slate-800/60 dark:hover:bg-slate-800/40">
-                        <td className="px-6 py-3 font-medium">{i.name} {low && <span className="ml-1.5 rounded-full bg-amber-100 px-2 py-0.5 text-[10.5px] font-bold text-amber-700 dark:bg-amber-950 dark:text-amber-300">BELOW PAR</span>}</td>
+                        <td className="px-6 py-3 font-medium">{i.name} {low && <span className="ml-1.5 inline-block whitespace-nowrap rounded-full bg-amber-100 px-2 py-0.5 align-middle text-[10.5px] font-bold text-amber-700 dark:bg-amber-950 dark:text-amber-300">BELOW PAR</span>}</td>
                         <td className="px-4 py-3 text-slate-400">{i.spec || '—'}</td>
                         <td className="px-4 py-3">{i.unit || '—'}</td>
                         <td className="px-4 py-3 text-right font-semibold">{money(i.guide_price)}</td>

@@ -29,7 +29,7 @@ export default function Requests() {
                   <tr key={r.id} className="border-b border-slate-50 transition-colors last:border-0 hover:bg-slate-50/80 dark:border-slate-800/60 dark:hover:bg-slate-800/40">
                     <td className="px-5 py-3.5 font-semibold text-slate-800 dark:text-slate-100">{r.ref}</td>
                     <td className="px-5 py-3.5">{r.type === 'emergency'
-                      ? <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">⚑ Emergency</span>
+                      ? <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">⚑ Emergency</span>
                       : <span className="text-slate-500 dark:text-slate-400">Routine</span>}</td>
                     <td className="px-5 py-3.5 text-slate-600 dark:text-slate-300">{r.vendor_name}</td>
                     <td className="px-5 py-3.5 text-slate-600 dark:text-slate-300">{r.requester_name}</td>

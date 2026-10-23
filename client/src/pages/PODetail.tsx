@@ -76,23 +76,25 @@ export default function PODetail({ user }: { user: User }) {
         <div className="space-y-4 xl:col-span-2">
           <Card className="p-6">
             <h2 className="mb-4 font-display text-[16px] font-semibold text-slate-900 dark:text-white">Line items</h2>
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[540px] text-sm">
               <thead><tr className="border-b border-slate-100 text-left text-[11px] uppercase tracking-wider text-slate-400 dark:border-slate-800">
-                <th className="py-2 font-semibold">Item</th><th className="py-2 font-semibold">Spec</th><th className="py-2 text-right font-semibold">Qty</th>
-                <th className="py-2 text-right font-semibold">Received</th><th className="py-2 text-right font-semibold">Unit price</th><th className="py-2 text-right font-semibold">Line total</th></tr></thead>
+                <th className="whitespace-nowrap px-3 py-2 font-semibold">Item</th><th className="whitespace-nowrap px-3 py-2 font-semibold">Spec</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Qty</th>
+                <th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Received</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Unit price</th><th className="whitespace-nowrap px-3 py-2 text-right font-semibold">Line total</th></tr></thead>
               <tbody>
                 {po.lines.map((l: any) => (
                   <tr key={l.id} className="border-b border-slate-50 last:border-0 dark:border-slate-800/60">
-                    <td className="py-2.5 font-medium text-slate-800 dark:text-slate-100">{l.item_name}</td>
-                    <td className="py-2.5 text-slate-400">{l.spec || '—'}</td>
-                    <td className="py-2.5 text-right">{l.qty} {l.unit}</td>
-                    <td className="py-2.5 text-right">{po.receivedByLine[l.id]?.a ?? 0}</td>
-                    <td className="py-2.5 text-right">{money(l.unit_price)}</td>
-                    <td className="py-2.5 text-right font-semibold">{money(l.line_total)}</td>
+                    <td className="px-3 py-2.5 font-medium text-slate-800 dark:text-slate-100">{l.item_name}</td>
+                    <td className="px-3 py-2.5 text-slate-400">{l.spec || '—'}</td>
+                    <td className="px-3 py-2.5 text-right">{l.qty} {l.unit}</td>
+                    <td className="px-3 py-2.5 text-right">{po.receivedByLine[l.id]?.a ?? 0}</td>
+                    <td className="px-3 py-2.5 text-right">{money(l.unit_price)}</td>
+                    <td className="px-3 py-2.5 text-right font-semibold">{money(l.line_total)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
             <dl className="ml-auto mt-4 w-64 space-y-1.5 text-sm">
               <div className="flex justify-between"><dt className="text-slate-400">Subtotal</dt><dd>{money(po.subtotal)}</dd></div>
               {!!po.discount && <div className="flex justify-between"><dt className="text-slate-400">Discount</dt><dd>−{money(po.discount)}</dd></div>}
@@ -108,16 +110,18 @@ export default function PODetail({ user }: { user: User }) {
               {po.receipts.map((r: any) => (
                 <div key={r.id} className="mb-4 last:mb-0">
                   <div className="text-[13px] text-slate-500 dark:text-slate-400">Slip {r.delivery_slip || '—'} · received by {r.receiver_name} · {fmtDateTime(r.received_at)}{r.notes ? ` · ${r.notes}` : ''}</div>
-                  <table className="mt-2 w-full text-sm">
-                    <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-400"><th className="py-1 font-semibold">Item</th><th className="py-1 text-right font-semibold">Ordered</th><th className="py-1 text-right font-semibold">Accepted</th><th className="py-1 text-right font-semibold">Rejected</th><th className="py-1 font-semibold">Quality</th><th className="py-1 font-semibold">Issue / action</th></tr></thead>
+                  <div className="overflow-x-auto">
+                  <table className="mt-2 w-full min-w-[620px] text-sm">
+                    <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-400"><th className="whitespace-nowrap px-3 py-1 font-semibold">Item</th><th className="whitespace-nowrap px-3 py-1 text-right font-semibold">Ordered</th><th className="whitespace-nowrap px-3 py-1 text-right font-semibold">Accepted</th><th className="whitespace-nowrap px-3 py-1 text-right font-semibold">Rejected</th><th className="whitespace-nowrap px-3 py-1 font-semibold">Quality</th><th className="whitespace-nowrap px-3 py-1 font-semibold">Issue / action</th></tr></thead>
                     <tbody>{r.lines.map((l: any) => (
                       <tr key={l.id} className="border-t border-slate-50 dark:border-slate-800/60">
-                        <td className="py-1.5">{l.item_name}</td><td className="py-1.5 text-right">{l.qty_ordered}</td>
-                        <td className="py-1.5 text-right font-medium">{l.qty_accepted}</td><td className="py-1.5 text-right">{l.qty_rejected}</td>
-                        <td className="py-1.5">{l.quality_check || '—'}{l.temperature ? ` · ${l.temperature}` : ''}</td>
-                        <td className="py-1.5 text-slate-500 dark:text-slate-400">{[l.issue, l.action].filter(Boolean).join(' → ') || '—'}</td>
+                        <td className="px-3 py-1.5">{l.item_name}</td><td className="px-3 py-1.5 text-right">{l.qty_ordered}</td>
+                        <td className="px-3 py-1.5 text-right font-medium">{l.qty_accepted}</td><td className="px-3 py-1.5 text-right">{l.qty_rejected}</td>
+                        <td className="px-3 py-1.5">{l.quality_check || '—'}{l.temperature ? ` · ${l.temperature}` : ''}</td>
+                        <td className="px-3 py-1.5 text-slate-500 dark:text-slate-400">{[l.issue, l.action].filter(Boolean).join(' → ') || '—'}</td>
                       </tr>))}</tbody>
                   </table>
+                  </div>
                 </div>
               ))}
             </Card>
