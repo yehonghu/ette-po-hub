@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install server dependencies
+        run: npm --prefix server install
+      - name: Install client dependencies
+        run: npm --prefix client install
+      - name: Build client (tsc + vite)
+        run: npm --prefix client run build
+      - name: Start API on a fresh database
+        run: |
+          cd server
+          rm -f data.sqlite data.sqlite-wal data.sqlite-shm
+          node src/index.js &
+          echo $! > /tmp/ette-api.pid
+          for i in $(seq 1 30); do curl -sf http://localhost:4000/api/health && break || sleep 1; done
+      - name: Run full-cycle smoke test
+        run: node scripts/smoke.mjs
+      - name: Stop API
+        if: always()
+        run: kill $(cat /tmp/ette-api.pid) || true
